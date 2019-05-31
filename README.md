@@ -1,6 +1,6 @@
 ## Formalism
 
-<img src="resources/img/plugin-hero.svg" style="max-width:100px" />
+<img src="resources/img/plugin-hero.svg" width="100" />
 
 Formalism is a set of form components that deliver an amazing user experience with styles that can be customised to make it your own.
 
@@ -47,7 +47,7 @@ After importing the input base and theme file:
 
 Your input will look like this:
 
-___
+[SCREENCAP TO GO HERE]
 
 There's plenty more field components like button, checkbox, checkboxGroup, date, file, input, radio, radioGroup, search, submit, switcher and textarea.
 
