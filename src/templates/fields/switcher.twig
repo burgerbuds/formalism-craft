@@ -1,0 +1,13 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Switcher',
+    id: 'switcher' ~ random(5000),
+    baseClass: 'f-switcher',
+} %}
+
+{% set self = defaults|merge(params) %}
+{{ craft.formalism.checkbox(self) }}
+
+{% endspaceless %}

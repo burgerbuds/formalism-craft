@@ -1,0 +1,11 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    type: 'date',
+} %}
+
+{% set self = defaults|merge(params) %}
+{{ craft.formalism.input(self) }}
+
+{% endspaceless %}

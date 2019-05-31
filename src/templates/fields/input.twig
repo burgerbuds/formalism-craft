@@ -1,0 +1,72 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Label',
+    theme: 'outlined',
+    name: '',
+    value: '',
+    instructions: '',
+    classes: [],
+    id: 'input' ~ random(5000),
+    type: 'text',
+    error: '',
+    hasError: false,
+    isDisabled: false,
+    isRequired: false,
+    isOptional: false,
+    isOpen: false,
+    indicator: {
+        isHidden: false,
+        required: '*',
+        optional: 'optional',
+    },
+    attributesContainer: {},
+    attributesInner: {},
+    attributesField: {},
+    baseClass: 'f-input'
+} %}
+
+{% set self = defaults|merge(params) %}
+
+{% set bc = self.baseClass %}
+{% set hasError = self.error or self.hasError %}
+{% set errorClass = hasError ? 'has-error' : '' %}
+{% set filledClass = self.value or self.isOpen ? 'is-filled' : '' %}
+{% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, self.isOptional ? self.indicator.optional|default('optional') : null, bc) %}
+
+{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+    class: [[bc, [bc, self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
+    'data-container': '',
+})) %}
+
+{% set attributesInner = macros.attributes(self.attributesInner|merge({
+    class: bc ~ '__inner',
+    for: self.id,
+})) %}
+
+{% set instructionId = self.instructions ? self.id ~ '-instructions' : null %}
+
+{% set attributesField = macros.attributes(self.attributesField|merge({
+    class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
+    type: self.type,
+    id: self.id,
+    name: self.name,
+    value: self.value,
+    required: self.isRequired ? 'required' : null,
+    disabled: self.isDisabled ? 'true' : null,
+    'aria-invalid': hasError ? 'true' : null,
+    'aria-describedby': instructionId,
+    'data-field': ''
+})) %}
+
+<div {{ attributesContainer }}>
+    <label {{ attributesInner }}>
+        <input {{ attributesField }}>
+        {{ macros.label(self.label, bc) }}
+        {{ indicator }}
+    </label>
+    {{ macros.messages(self.error, self.instructions, bc, instructionId) }}
+</div>
+
+{% endspaceless %}

@@ -1,0 +1,79 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Label',
+    theme: 'outlined',
+    name: 'q',
+    value: '',
+    instructions: '',
+    classes: [],
+    id: 'input' ~ random(5000),
+    buttonContents: '',
+    error: '',
+    hasError: false,
+    isDisabled: false,
+    attributesContainer: {},
+    attributesInner: {},
+    attributesField: {},
+    baseClass: 'f-search'
+} %}
+
+{% set self = defaults|merge(params) %}
+{% set bc = self.baseClass %}
+{% set hasError = self.error or self.hasError %}
+{% set errorClass = hasError ? 'has-error' : '' %}
+{% set filledClass = self.value ? 'is-filled' : '' %}
+
+{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+    class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
+    'data-container': '',
+})) %}
+
+{% set attributesInner = macros.attributes(self.attributesInner|merge({
+    class: bc ~ '__inner',
+    for: self.id,
+})) %}
+
+{% set instructionId = self.instructions ? self.id ~ '-instructions' : null %}
+
+{% set attributesField = macros.attributes(self.attributesField|merge({
+    class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
+    type: 'search',
+    id: self.id,
+    name: self.name,
+    value: self.value,
+    disabled: self.isDisabled ? 'true' : null,
+    'aria-invalid': hasError ? 'true' : null,
+    'aria-describedby': instructionId,
+    'data-field': '',
+})) %}
+
+{% set attributesButton = macros.attributes({
+    class: [
+        bc ~ '__button',
+        self.buttonContents ? '' : ' ' ~ bc ~ '__button--icon'
+    ]|join(' ')|trim,
+    type: 'submit',
+    disabled: self.isDisabled ? 'true' : null,
+}) %}
+
+<div {{ attributesContainer }}>
+    <label {{ attributesInner }}>
+        <input {{ attributesField }}>
+        {{ macros.label(self.label, bc) }}
+        <button {{ attributesButton }}>
+            {% if self.buttonContents %}
+                {{ self.buttonContents|raw }}
+            {% else %}
+                <svg aria-label="search" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="2"/>
+                    <path d="M28 28L21 21" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            {% endif %}
+        </button>
+    </label>
+    {{ macros.messages(self.error, self.instructions, bc, instructionId) }}
+</div>
+
+{% endspaceless %}

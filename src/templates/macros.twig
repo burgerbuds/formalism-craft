@@ -1,0 +1,53 @@
+{#
+Formalism Macros
+#}
+
+{% macro messages(error, instructions, bc, instructionId) %}
+    {% if error %}
+        <div class="{{ bc }}__message {{ bc }}__message--error" data-field-error>
+            {{ error }}
+        </div>
+    {% endif %}
+    {% if instructions %}
+        <div{% if instructionId %} id="{{ instructionId }}"{% endif %} class="{{ bc }}__message {{ bc }}__message--instruction">
+            {{ instructions }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro label(text, bc, children = '') %}
+    <span class="{{ bc }}__label">
+        <span class="{{ bc }}__label-text">{{ text }}</span>
+        {{ children|raw }}
+    </span>
+{% endmacro %}
+
+{% macro indicator(required, optional, bc) %}
+    {% if optional %}
+        <span class="{{ bc }}__indicator {{ bc }}__indicator--optional" aria-hidden="true">{{ optional }}</span>
+    {% elseif required %}
+        <span class="{{ bc }}__indicator {{ bc }}__indicator--required" aria-hidden="true">{{ required }}</span>
+    {% endif %}
+{% endmacro %}
+
+{#
+Attributes
+Converts an object to a list of attributes.
+
+Usage:
+{% import '_macros' as macro %}
+{% set object = {
+    class: 'link'
+    href: '#',
+    target: link.blank ? "_blank",
+} %}
+<a {{ macro.attributes(object) }}>...</a>
+#}
+{% macro attributes(object) %}{% spaceless %}
+    {% set output %}
+        {% for key, value in object if value is not null %} {% spaceless %}
+            {{ key }}="{{ value|default }}"
+        {% endspaceless %}{% endfor %}
+    {% endset %}
+    {{ output | trim | raw }}
+{% endspaceless %}{% endmacro %}

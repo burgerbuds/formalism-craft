@@ -1,0 +1,66 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Checkbox',
+    name: '',
+    theme: 'outlined',
+    value: '',
+    classes: [],
+    id: 'checkbox' ~ random(5000),
+    error: '',
+    hasError: false,
+    isChecked: false,
+    isDisabled: false,
+    isRequired: false,
+    indicator: {
+        isHidden: false,
+        required: '*',
+        optional: 'optional',
+    },
+    attributesContainer: {},
+    attributesInner: {},
+    attributesField: {},
+    baseClass: 'f-checkbox',
+} %}
+
+{% set self = defaults|merge(params) %}
+{% set bc = self.baseClass %}
+{% set hasError = self.error or self.hasError %}
+{% set errorClass = hasError ? 'has-error' : '' %}
+{% set filledClass = self.isChecked ? 'is-filled' : '' %}
+{% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, null, bc) %}
+{% set labelChildren = self.isRequired ? '&nbsp;'|raw ~ indicator : '' %}
+
+{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+    class: [[bc, [bc, self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
+    'data-container': '',
+})) %}
+
+{% set attributesInner = macros.attributes(self.attributesInner|merge({
+    class: bc ~ '__inner',
+    for: self.id,
+})) %}
+
+{% set attributesField = macros.attributes(self.attributesField|merge({
+    class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
+    id: self.id,
+    name: self.name,
+    value: self.value,
+    type: 'checkbox',
+    checked: self.isChecked ? 'checked' : null,
+    required: self.isRequired ? 'required' : null,
+    disabled: self.isDisabled ? 'true' : null,
+    'aria-invalid': hasError ? 'true' : null,
+    'data-field': '',
+})) %}
+
+<div {{ attributesContainer }}>
+    <label {{ attributesInner }}>
+        <input {{ attributesField }}>
+        {{ macros.label(self.label, bc, labelChildren) }}
+    </label>
+    {{ macros.messages(self.error, null, bc) }}
+</div>
+
+{% endspaceless %}

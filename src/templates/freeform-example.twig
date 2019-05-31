@@ -1,0 +1,275 @@
+{# Freeform custom form template #}
+
+{% set formErrorHtml %}
+    <div class="form__group" data-form-error-note>
+        <div class="form__item">
+            <div class="form-error">
+                <div class="form-error__inner">
+                    <div class="form-error__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 56 48">
+                            <path d="M55.72,44.98l-26-44C29.36,0.37,28.71,0,28,0s-1.36,0.37-1.72,0.98l-26,44c-0.37,0.62-0.37,1.38-0.02,2.01 C0.62,47.62,1.28,48,2,48h52c0.72,0,1.38-0.38,1.74-1.01C56.09,46.37,56.09,45.6,55.72,44.98z M28,42c-1.66,0-3-1.34-3-3 s1.34-3,3-3s3,1.34,3,3S29.66,42,28,42z M31,17.83L30,31c-0.08,1.1-1.05,1.93-2.15,1.85c-1-0.08-1.78-0.88-1.85-1.85l-1-13.17 c-0.13-1.66,1.12-3.1,2.77-3.23s3.1,1.12,3.23,2.77C31.01,17.53,31.01,17.69,31, 17.83z"/>
+                        </svg>
+                    </div>
+                    <div class="form-error__text">{% spaceless %}
+                        {{ "There was an issue submitting the form, please check the fields below"|t }}
+                    {% endspaceless %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endset %}
+
+{% set formSuccessHtml %}
+    <div class="form-success" id="{{ "success-#{form.id}" }}">
+        <div class="form-success__inner">
+            <div class="form-success__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 26 26">
+                    <path d="m.3,14c-0.2-0.2-0.3-0.5-0.3-0.7s0.1-0.5 0.3-0.7l1.4-1.4c0.4-0.4 1-0.4 1.4,0l.1,.1 5.5,5.9c0.2,0.2 0.5,0.2 0.7,0l13.4-13.9h0.1v-8.88178e-16c0.4-0.4 1-0.4 1.4,0l1.4,1.4c0.4,0.4 0.4,1 0,1.4l0,0-16,16.6c-0.2,0.2-0.4,0.3-0.7,0.3-0.3,0-0.5-0.1-0.7-0.3l-7.8-8.4-.2-.3z"/>
+                </svg>
+            </div>
+            <div class="form-success__text">{% spaceless %}
+                {{ "Your form was submitted successfully"|t }}
+            {% endspaceless %}</div>
+        </div>
+    </div>
+{% endset %}
+
+{% set formSubmittingHtml %}
+    <div class="form-submitting" id="{{ "submitting-form-#{form.id}" }}">
+        <div class="form-submitting__inner">
+            <div class="form-submitting__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 319.035 319.035">
+                    <path d="M318.382,225.181l-10.335-39.599c-1.858-7.123-6.697-12.924-13.275-15.917s-14.131-2.83-20.724,0.449l-40.188,19.992
+                        c-9.89,4.92-13.918,16.925-8.999,26.814c3.635,7.306,11.136,11.399,18.794,11.064c-19.938,26.19-51.22,42.266-85.822,42.266
+                        c-47.832,0-89.333-30.704-103.271-76.404c-3.222-10.565-14.398-16.518-24.964-13.295c-10.565,3.222-16.518,14.399-13.295,24.964
+                        c9.053,29.686,27.764,56.355,52.683,75.095c25.785,19.391,56.507,29.64,88.847,29.64s63.063-10.249,88.847-29.64
+                        c14.225-10.698,26.416-23.986,35.953-38.937c3.708,5.313,9.832,8.563,16.384,8.563c1.671,0,3.372-0.211,5.064-0.653
+                        C314.768,246.795,321.171,235.869,318.382,225.181z"/>
+                    <path d="M24.263,149.369c3.129,1.424,6.478,2.133,9.839,2.133c3.706,0,7.428-0.863,10.885-2.582l40.188-19.992
+                        c9.89-4.92,13.918-16.925,8.999-26.814c-3.634-7.305-11.136-11.4-18.794-11.064c19.938-26.19,51.219-42.266,85.822-42.266
+                        c47.832,0,89.333,30.704,103.271,76.404c2.629,8.622,10.554,14.171,19.123,14.171c1.932,0,3.897-0.283,5.841-0.875
+                        c10.565-3.222,16.518-14.399,13.295-24.964c-9.053-29.686-27.764-56.355-52.683-75.095c-25.785-19.391-56.507-29.64-88.847-29.64
+                        S98.14,19.033,72.355,38.424c-14.229,10.701-26.423,23.994-35.961,38.95c-4.654-6.671-13.111-10.098-21.441-7.923
+                        C4.266,72.24-2.136,83.166,0.653,93.853l10.335,39.599C12.847,140.575,17.685,146.376,24.263,149.369z"/>
+                </svg>
+            </div>
+            <div class="form-submitting__text">{% spaceless %}
+                {{ "Your form is submitting&hellip;"|t }}
+            {% endspaceless %}</div>
+        </div>
+    </div>
+{% endset %}
+
+{% set formSuccess = craft.app.request.param("success-#{form.id}")|default %}
+
+{% if formSuccess %}
+    {{ formSuccessHtml }}
+{% endif %}
+
+{% if not formSuccess %}
+
+{{ formSubmittingHtml }}
+
+{% set defaultReturnUrl = "#{craft.app.request.pathInfo()|default(siteUrl)}?success-#{form.id}=1#success-#{form.id}" %}
+{% set customReturnUrl = form.returnUrl|default %}
+{% set returnUrl = customReturnUrl|default(defaultReturnUrl) %}
+
+{{ form.renderTag({
+    returnUrl: returnUrl,
+    id: "form-#{form.id}",
+    class: "form" ~ (formSubmittingHtml ? ' form--has-submitting'),
+    formAttributes: {
+        "novalidate": "true",
+        "accept-charset": "UTF-8",
+        "enctype": "multipart/form-data",
+    },
+}) }}
+
+<div class="form__inner" data-form-inner>
+
+    {% if form.hasErrors %}
+        {{ formErrorHtml }}
+    {% endif %}
+
+    {% for page in form.pages %}
+
+        {% for row in page %}
+            <div class="form__group form__group--{{ row|length }}-col{{ form.customAttributes.rowClass ? " #{form.customAttributes.rowClass }" }}">
+
+                {% for field in row %}
+
+                    {% set properties = craft.formalism.freeformProps(field, form, {
+                        indicator: { required: '*' }
+                    }) %}
+
+                    {% set type = field.type %}
+
+                    <div class="form__item form__item--{{ type|kebab }}" {{ field.rulesHtmlData }}>
+
+                        {% switch type %}
+
+                            {% case "recaptcha" %}
+                                <div class="f-input">
+                                    {{ field.renderInput }}
+                                    <div style="margin-top: 0.5em; margin-left: 0.5em;">
+                                        {{ properties.error }}
+                                    </div>
+                                </div>
+
+                            {% case "submit" %}
+                                {% include '_partials/button' with {
+                                    title: field.labelNext,
+                                    icon: 'arrow-right',
+                                    type: 'submit',
+                                    block: false,
+                                    theme: 'primary',
+                                } only %}
+
+                            {% case "html" %}
+                                <div class="form__html">
+                                    {{ field.render() }}
+                                </div>
+
+                            {% case "datetime" %}
+                                {# This grabs the built attributes from the Freeform field so we can supply them to the component #}
+                                {% set getAttr = craft.formalism.getObjectFromHtml(field.renderInput) %}
+                                {% set id = getAttr.id|default('input' ~ random(5000)) %}
+                                {{ craft.formalism.input(
+                                    properties,
+                                    {
+                                        id: id,
+                                        type: getAttr['type']|default,
+                                        attributesField: {
+                                            autocomplete: 'off',
+                                            'data-datepicker-format': getAttr['data-datepicker-format']|default,
+                                            'data-datepicker-enabledate': getAttr['data-datepicker-enabledate']|default,
+                                            'data-datepicker-min-date': getAttr['data-datepicker-min-date']|default,
+                                            'data-datepicker-max-date': getAttr['data-datepicker-max-date']|default,
+                                        }
+                                    }
+                                ) }}
+
+                            {% case "select" %}
+                                {{ craft.formalism.select(properties) }}
+
+                            {% case "file" %}
+                                {{ craft.formalism.file(properties, {
+                                    isMultiple: field.fileCount > 1,
+                                    accept: field.fileKinds|join(','),
+                                }) }}
+
+                            {% case "textarea" %}
+                                {{ craft.formalism.textarea(properties) }}
+
+                            {% case "checkbox" %}
+                                {{ craft.formalism.checkbox(
+                                    properties,
+                                    { isChecked: field.checked }
+                                ) }}
+
+                            {% case "email" %}
+                                {{ craft.formalism.input(
+                                    properties,
+                                    { type: 'email' }
+                                ) }}
+
+                            {% case "password" or "confirmation" %}
+                                {# These fields need to be always "open" #}
+                                {{ craft.formalism.input(
+                                    properties,
+                                    {
+                                        classes: 'is-filled',
+                                        type: 'password'
+                                    }
+                                ) }}
+
+                            {% case "radio_group" %}
+                                {{ craft.formalism.radioGroup(
+                                    properties,
+                                    {
+                                        oneLine: field.oneLine,
+                                        minColumnWidth: '200px',
+                                    }
+                                ) }}
+
+                            {% case "checkbox_group" or "multiple_select" %}
+                                {{ craft.formalism.checkboxGroup(
+                                    properties,
+                                    {
+                                        oneLine: field.oneLine,
+                                        minColumnWidth: '200px',
+                                    }
+                                ) }}
+
+                            {% case "dynamic_recipients" %}
+                                {# TODO: Needs testing #}
+                                {% set options = field.options %}
+                                {% set dynamicOptions = [] %}
+                                {% for option in options %}
+                                    {% set dynamicOption = {
+                                        label: option.label,
+                                        value: loop.index0,
+                                        isChecked: option.checked
+                                    } %}
+                                    {% set dynamicOptions = dynamicOptions|merge([dynamicOption]) %}
+                                {% endfor %}
+
+                                {% if field.showAsRadio %}
+                                    {{ craft.formalism.radioGroup(
+                                        properties,
+                                        {
+                                            oneLine: field.oneLine,
+                                            options: dynamicOptions,
+                                            minColumnWidth: '200px',
+                                        }
+                                    ) }}
+
+                                {% elseif field.showAsCheckboxes %}
+                                    {{ craft.formalism.checkboxGroup(
+                                        properties,
+                                        {
+                                            oneLine: field.oneLine,
+                                            options: dynamicOptions,
+                                            minColumnWidth: '200px',
+                                        }
+                                    ) }}
+
+                                {% else %}
+                                    {{ craft.formalism.select(
+                                        properties,
+                                        {
+                                            options: dynamicOptions,
+                                        }
+                                    ) }}
+
+                                {% endif %}
+
+                            {% default %}
+                                {{ craft.formalism.input(properties) }}
+
+                        {% endswitch %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endfor %}
+
+    {% endfor %}
+
+</div>
+
+{{ form.renderClosingTag }}
+
+{% includeJsFile rev('assets/build/js/freeform.js') %}
+
+{% endif %}
+
+<script>
+    window.form{{ form.id }} = {
+        successTemplate: '{% spaceless %}{{ formSuccessHtml|e('js') }}{% endspaceless %}',
+        errorTemplate: '{% spaceless %}{{ formErrorHtml|e('js') }}{% endspaceless %}',
+    }
+</script>

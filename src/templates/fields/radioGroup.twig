@@ -1,0 +1,79 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Radio group',
+    name: '',
+    options: [],
+    theme: 'outlined',
+    themeOptions: 'outlined',
+    classes: [],
+    id: 'radio-group' ~ random(5000),
+    error: '',
+    instructions: '',
+    minColumnWidth: null,
+    oneLine: false,
+    hasError: false,
+    isRequired: false,
+    indicator: {
+        isHidden: false,
+        required: '*',
+        optional: 'optional',
+    },
+    attributesContainer: {},
+    attributesInner: {},
+    baseClass: 'f-fieldset'
+} %}
+
+{% set self = defaults|merge(params) %}
+{% set bc = self.baseClass %}
+{% set hasError = self.error or self.hasError %}
+{% set errorClass = hasError ? 'has-error' : '' %}
+{% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, null, bc) %}
+{% set legendChildren = self.isRequired ? '&nbsp;'|raw ~ indicator : '' %}
+
+{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+    class: [
+        [bc, [bc,self.theme]|join('--') ]|join(' '),
+        self.classes|join(' '),
+        errorClass
+    ]|join(' ')|trim,
+    'data-container': '',
+})) %}
+
+{% if self.minColumnWidth %}{% spaceless %}
+    {% set vendorColumnText %} style="min-width:{{ self.minColumnWidth }};"{% endset %}
+{% endspaceless %}{% endif %}
+
+{% set attributesInner = macros.attributes(self.attributesInner|merge({
+    class: [
+        bc ~ '__inner',
+        bc ~ '__inner--' ~ (self.oneLine ? 'one-line' : 'stacked')
+    ]|join(' '),
+    for: self.id,
+})) %}
+
+<fieldset {{ attributesContainer }}>
+    {% if self.label %}
+        <legend class="{{ bc }}__legend">
+            {{ macros.label(self.label, bc, legendChildren) }}
+        </legend>
+    {% endif %}
+    {{ macros.messages(self.error, self.instructions, bc) }}
+    <div {{ attributesInner }}>
+        {% for option in self.options %}
+            <div{{ vendorColumnText|default }}>
+                {{ craft.formalism.radio({
+                    theme: self.themeOptions,
+                    name: self.name,
+                    id: self.id ~ '-' ~ loop.index0,
+                }|merge(option)|merge({
+                    error: defaults.error,
+                    hasError: defaults.hasError
+                })) }}
+            </div>
+        {% endfor %}
+    </div>
+</fieldset>
+
+{% endspaceless %}

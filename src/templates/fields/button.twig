@@ -1,0 +1,53 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    label: 'Label',
+    theme: 'solid',
+    type: 'button',
+    classes: [],
+    isDisabled: false,
+    attributesContainer: {},
+    attributesInner: {},
+    attributesField: {},
+    icon: '',
+    isIconFirst: true,
+    baseClass: 'f-button',
+} %}
+
+{% set self = defaults|merge(params) %}
+{% set bc = self.baseClass %}
+
+{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+    class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' ')]|join(' ')|trim,
+    'data-container': '',
+})) %}
+
+{% set attributesInner = macros.attributes(self.attributesInner|merge({
+    class: bc ~ '__inner',
+})) %}
+
+{% set attributesField = macros.attributes(self.attributesField|merge({
+    class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
+    disabled: self.isDisabled ? 'true' : null,
+    'data-button': '',
+    type: self.type,
+})) %}
+
+{% set icon %}
+   {% if self.icon %}
+        <div class="{{ bc ~ '__icon' }}">{{ self.icon }}</div>
+   {% endif %}
+{% endset %}
+
+<div {{ attributesContainer }}>
+    <button {{ attributesField }}>
+        <div {{ attributesInner }}>
+            {{ self.isIconFirst ? icon }}
+            <div class="{{ bc ~ '__label' }}">{{ self.label }}</div>
+            {{ not self.isIconFirst ? icon }}
+        </div>
+    </button>
+</div>
+
+{% endspaceless %}

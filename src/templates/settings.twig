@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Formalism plugin for Craft CMS 3.x
+ *
+ * Formalism Settings.twig
+ *
+ * @author    Simple
+ * @copyright Copyright (c) 2019 Simple Integrated Marketing
+ * @link      https://simple.com.au
+ * @package   Formalism
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.autosuggestField({
+    label: 'Component directory location',
+    instructions: 'Enter your custom field component directory',
+    id: 'pathComponent',
+    name: 'pathComponent',
+    suggestEnvVars: false,
+    suggestAliases: false,
+    value: settings['pathComponent']})
+}}

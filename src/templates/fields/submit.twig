@@ -1,0 +1,14 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    type: 'submit',
+    attributesField: {
+        'data-submit': '',
+    },
+} %}
+
+{% set self = defaults|merge(params) %}
+{{ craft.formalism.button(self) }}
+
+{% endspaceless %}
