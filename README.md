@@ -78,7 +78,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 
 2. Then tell Composer to load the plugin:
 
-        composer require simple-integrated-marketing/formalism
+        composer require simple-integrated-marketing/formalism-craft
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Formalism.
 
