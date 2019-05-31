@@ -117,13 +117,7 @@
                                 </div>
 
                             {% case "submit" %}
-                                {% include '_partials/button' with {
-                                    title: field.labelNext,
-                                    icon: 'arrow-right',
-                                    type: 'submit',
-                                    block: false,
-                                    theme: 'primary',
-                                } only %}
+                                {{ craft.formalism.button(properties) }}
 
                             {% case "html" %}
                                 <div class="form__html">
