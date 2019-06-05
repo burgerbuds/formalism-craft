@@ -1,5 +1,7 @@
 {# Freeform custom form template #}
 
+{{ craft.formalism.freeformJs }}
+
 {% set formErrorHtml %}
     <div class="form__group" data-form-error-note>
         <div class="form__item">
@@ -35,7 +37,7 @@
 {% endset %}
 
 {% set formSubmittingHtml %}
-    <div class="form-submitting" id="{{ "submitting-form-#{form.id}" }}">
+    <div class="form-submitting" id="{{ "submitting-form-#{form.id}" }}" hidden>
         <div class="form-submitting__inner">
             <div class="form-submitting__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 319.035 319.035">
@@ -99,6 +101,7 @@
                 {% for field in row %}
 
                     {% set properties = craft.formalism.freeformProps(field, form, {
+                        theme: 'outlined',
                         indicator: { required: '*' }
                     }) %}
 
@@ -117,7 +120,9 @@
                                 </div>
 
                             {% case "submit" %}
-                                {{ craft.formalism.button(properties) }}
+                                {{ craft.formalism.submit(properties, {
+                                    theme: 'solid',
+                                }) }}
 
                             {% case "html" %}
                                 <div class="form__html">
@@ -196,7 +201,6 @@
                                 ) }}
 
                             {% case "dynamic_recipients" %}
-                                {# TODO: Needs testing #}
                                 {% set options = field.options %}
                                 {% set dynamicOptions = [] %}
                                 {% for option in options %}
@@ -256,8 +260,6 @@
 </div>
 
 {{ form.renderClosingTag }}
-
-{% includeJsFile rev('assets/build/js/freeform.js') %}
 
 {% endif %}
 
