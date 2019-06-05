@@ -9,7 +9,7 @@ Formalism Macros
         </div>
     {% endif %}
     {% if instructions %}
-        <div{% if instructionId %} id="{{ instructionId }}"{% endif %} class="{{ bc }}__message {{ bc }}__message--instruction">
+        <div{% if instructionId %} id="{{ instructionId }}"{% endif %} class="{{ bc }}__message {{ bc }}__message--instruction" data-field-instruction>
             {{ instructions }}
         </div>
     {% endif %}
@@ -24,9 +24,9 @@ Formalism Macros
 
 {% macro indicator(required, optional, bc) %}
     {% if optional %}
-        <span class="{{ bc }}__indicator {{ bc }}__indicator--optional" aria-hidden="true">{{ optional }}</span>
+        <span class="{{ bc }}__indicator {{ bc }}__indicator--optional" aria-hidden="true" data-field-indicator>{{ optional }}</span>
     {% elseif required %}
-        <span class="{{ bc }}__indicator {{ bc }}__indicator--required" aria-hidden="true">{{ required }}</span>
+        <span class="{{ bc }}__indicator {{ bc }}__indicator--required" aria-hidden="true" data-field-indicator>{{ required }}</span>
     {% endif %}
 {% endmacro %}
 
@@ -45,7 +45,7 @@ Usage:
 #}
 {% macro attributes(object) %}{% spaceless %}
     {% set output %}
-        {% for key, value in object if value is not null %} {% spaceless %}
+        {% for key, value in object if key and value is not null %} {% spaceless %}
             {{ key }}="{{ value|default }}"
         {% endspaceless %}{% endfor %}
     {% endset %}

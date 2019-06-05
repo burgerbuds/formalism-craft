@@ -7,7 +7,7 @@
     baseClass: 'f-switcher',
 } %}
 
-{% set self = defaults|merge(params) %}
+{% set self = craft.formalism.deepMerge(defaults, params) %}
 {{ craft.formalism.checkbox(self) }}
 
 {% endspaceless %}

@@ -15,19 +15,19 @@
     baseClass: 'f-button',
 } %}
 
-{% set self = defaults|merge(params) %}
+{% set self = craft.formalism.deepMerge(defaults, params) %}
 {% set bc = self.baseClass %}
 
-{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+{% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' ')]|join(' ')|trim,
     'data-container': '',
 })) %}
 
-{% set attributesInner = macros.attributes(self.attributesInner|merge({
+{% set attributesInner = macros.attributes(craft.formalism.deepMerge(self.attributesInner, {
     class: bc ~ '__inner',
 })) %}
 
-{% set attributesField = macros.attributes(self.attributesField|merge({
+{% set attributesField = macros.attributes(craft.formalism.deepMerge(self.attributesField, {
     class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
     disabled: self.isDisabled ? 'true' : null,
     'data-button': '',

@@ -5,7 +5,7 @@
     type: 'date',
 } %}
 
-{% set self = defaults|merge(params) %}
+{% set self = craft.formalism.deepMerge(defaults, params) %}
 {{ craft.formalism.input(self) }}
 
 {% endspaceless %}

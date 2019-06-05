@@ -19,25 +19,26 @@
     baseClass: 'f-search'
 } %}
 
-{% set self = defaults|merge(params) %}
+{% set self = craft.formalism.deepMerge(defaults, params) %}
 {% set bc = self.baseClass %}
 {% set hasError = self.error or self.hasError %}
 {% set errorClass = hasError ? 'has-error' : '' %}
 {% set filledClass = self.value ? 'is-filled' : '' %}
 
-{% set attributesContainer = macros.attributes(self.attributesContainer|merge({
+{% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
     'data-container': '',
 })) %}
 
-{% set attributesInner = macros.attributes(self.attributesInner|merge({
+{% set attributesInner = macros.attributes(craft.formalism.deepMerge(self.attributesInner, {
     class: bc ~ '__inner',
     for: self.id,
+    'data-field-inner': '',
 })) %}
 
 {% set instructionId = self.instructions ? self.id ~ '-instructions' : null %}
 
-{% set attributesField = macros.attributes(self.attributesField|merge({
+{% set attributesField = macros.attributes(craft.formalism.deepMerge(self.attributesField, {
     class: [bc ~ '__field', self.attributesField.class|default()]|join(' ')|trim,
     type: 'search',
     id: self.id,
