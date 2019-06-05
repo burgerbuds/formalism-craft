@@ -1,44 +1,44 @@
 {
-  "name": "simple-integrated-marketing/formalism-craft",
-  "description": "Twig components for the Formalism field style framework",
-  "type": "craft-plugin",
-  "version": "0.0.1",
-  "keywords": [
-    "craft",
-    "cms",
-    "craftcms",
-    "craft-plugin",
-    "formalism",
-    "form styles"
-  ],
-  "support": {
-    "docs": "https://github.com/simple-integrated-marketing/formalism/blob/master/README.md",
-    "issues": "https://github.com/simple-integrated-marketing/formalism/issues"
-  },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Simple-Integrated-Marketing",
-      "homepage": "https://simple.com.au"
-    }
-  ],
-  "require": {
-    "craftcms/cms": "^3.0.0-RC1"
-  },
-  "autoload": {
-    "psr-4": {
-      "simple\\formalism\\": "src/"
-    }
-  },
-  "extra": {
-    "name": "Formalism",
-    "handle": "formalism",
-    "hasCpSettings": true,
-    "hasCpSection": false,
-    "changelogUrl": "https://raw.githubusercontent.com/simple-integrated-marketing/formalism/master/CHANGELOG.md",
-    "components": {
-      "formalismService": "simple\\formalism\\services\\FormalismService"
+    "name": "simple/formalism-craft",
+    "description": "Twig components for the Formalism field style framework",
+    "type": "craft-plugin",
+    "version": "0.0.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "formalism",
+        "form styles"
+    ],
+    "support": {
+        "docs": "https://github.com/simple-integrated-marketing/formalism/blob/master/README.md",
+        "issues": "https://github.com/simple-integrated-marketing/formalism/issues"
     },
-    "class": "simple\\formalism\\Formalism"
-  }
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simple-Integrated-Marketing",
+            "homepage": "https://simple.com.au"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+            "simple\\formalism\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Formalism",
+        "handle": "formalism",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/simple-integrated-marketing/formalism/master/CHANGELOG.md",
+        "components": {
+            "formalismService": "simple\\formalism\\services\\FormalismService"
+        },
+        "class": "simple\\formalism\\Formalism"
+    }
 }
