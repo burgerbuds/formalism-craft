@@ -20,6 +20,8 @@ use SimpleXMLElement;
  */
 class FormalismVariable
 {
+    // Retrieve field components
+
     public function custom(string $componentName, array $params = [], array $paramsMerge = [])
     {
         return formalism::$plugin->formalismService->getCustomComponent($componentName, $params, $paramsMerge);
@@ -30,15 +32,32 @@ class FormalismVariable
         return formalism::$plugin->formalismService->getComponent($componentName, $params);
     }
 
+    // Freeform integrations
+
     public function freeformProps($field, $form, array $paramsMerge = [])
     {
         return formalism::$plugin->formalismService->getFreeformProps($field, $form, $paramsMerge);
     }
+
+    public function freeformJs(bool $build = true)
+    {
+        $filePath = $build ? 'dist/freeform.js' : 'src/freeform.js';
+        $url = Craft::$app->assetManager->getPublishedUrl("@simple/formalism/assetbundles/$filePath");
+        if (!$url) throw new Exception("🧐 The freeform file wasn't found.");
+        Craft::$app->view->registerJsFile($url);
+    }
+
+    // Utilities
 
     public function getObjectFromHtml(string $html)
     {
         $x = new SimpleXMLElement($html);
         $attributes = iterator_to_array($x->attributes());
         return $attributes;
+    }
+
+    public function deepMerge(array $array1, array $array2)
+    {
+        return array_replace_recursive($array1, $array2);
     }
 }
