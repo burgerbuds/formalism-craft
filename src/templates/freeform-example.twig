@@ -30,7 +30,7 @@
                 </svg>
             </div>
             <div class="form-success__text">{% spaceless %}
-                {{ "Your form was submitted successfully"|t }}
+                {{ form.customAttributes.formAttributes.successMessage|default("Your form was submitted successfully") }}
             {% endspaceless %}</div>
         </div>
     </div>
@@ -96,12 +96,11 @@
     {% for page in form.pages %}
 
         {% for row in page %}
-            <div class="form__group form__group--{{ row|length }}-col{{ form.customAttributes.rowClass ? " #{form.customAttributes.rowClass }" }}">
+            <div class="form__group form__group--{{ row|length }}-col{{ form.customAttributes.rowClass ? " #{ form.customAttributes.rowClass }" }}">
 
                 {% for field in row %}
 
                     {% set properties = craft.formalism.freeformProps(field, form, {
-                        theme: 'outlined',
                         indicator: { required: '*' }
                     }) %}
 
@@ -114,15 +113,17 @@
                             {% case "recaptcha" %}
                                 <div class="f-input">
                                     {{ field.renderInput }}
-                                    <div style="margin-top: 0.5em; margin-left: 0.5em;">
-                                        {{ properties.error }}
-                                    </div>
+                                    {{ properties.error }}
                                 </div>
 
                             {% case "submit" %}
-                                {{ craft.formalism.submit(properties, {
-                                    theme: 'solid',
-                                }) }}
+                                {% include '_partials/button' with {
+                                    title: field.labelNext,
+                                    icon: 'arrow-right',
+                                    type: 'submit',
+                                    block: false,
+                                    theme: 'primary',
+                                } only %}
 
                             {% case "html" %}
                                 <div class="form__html">
@@ -163,7 +164,10 @@
                             {% case "checkbox" %}
                                 {{ craft.formalism.checkbox(
                                     properties,
-                                    { isChecked: field.checked }
+                                    {
+                                        isChecked: field.checked,
+                                        value: '1',
+                                    }
                                 ) }}
 
                             {% case "email" %}
@@ -173,11 +177,10 @@
                                 ) }}
 
                             {% case "password" or "confirmation" %}
-                                {# These fields need to be always "open" #}
                                 {{ craft.formalism.input(
                                     properties,
                                     {
-                                        classes: 'is-filled',
+                                        isOpen: true,
                                         type: 'password'
                                     }
                                 ) }}
