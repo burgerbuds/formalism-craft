@@ -35,7 +35,8 @@
 
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [[bc, [bc, self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
-    (not self.isFieldGroup ? 'data-container' : ''): '',
+    'data-container' : '',
+    (self.isFieldGroup ? 'data-container-fieldgroup' : ''): ''
 })) %}
 
 {% set attributesInner = macros.attributes(craft.formalism.deepMerge(self.attributesInner, {

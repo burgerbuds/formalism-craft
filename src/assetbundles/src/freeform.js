@@ -69,7 +69,6 @@ const removeExistingErrors = form => {
 };
 
 const changeSubmitState = (form, addState = true) => {
-    // Form
     addState && form.classList.add('is-submitting');
     !addState && form.classList.remove('is-submitting');
     const submitButton = form.querySelector('button[type=submit]');
@@ -84,8 +83,7 @@ const changeSubmitState = (form, addState = true) => {
 };
 
 const clearFieldError = field => {
-    // TODO: Extended validation for field types
-    const container = field.closest(SELECTOR.FIELD_CONTAINER);
+    const container = getContainer(field);
     container.classList.remove('has-error');
     const errorMessage = container.querySelector(SELECTOR.FIELD_ERROR);
     if (!errorMessage) return;
@@ -94,24 +92,37 @@ const clearFieldError = field => {
     return;
 };
 
+const getContainer = field => {
+    // Get parent container
+    let container = field.closest(SELECTOR.FIELD_CONTAINER);
+    // Check if container is part of a fieldset
+    const isFieldset = container.hasAttribute('data-container-fieldgroup');
+    // Select the parent fieldset if field
+    if (isFieldset) {
+        container = container.parentNode.closest(SELECTOR.FIELD_CONTAINER);
+    }
+    if (!container) return console.warn(`No container found for ${fieldName}`);
+    return container;
+};
+
 // Add the error messages to each field
 window.renderErrors = (errors, form) => {
+    console.log(errors);
     // Reset the form errors
     removeExistingErrors(form);
     changeSubmitState(form, false);
     if (errors.length === 0) return;
-
     Object.keys(errors).forEach((fieldName, index) => {
         // Add the errors to each error field
         const errorList = errors[fieldName];
-        const field = form.querySelector(
+        const allFieldMatches = form.querySelectorAll(
             `[name="${fieldName}"], [name="${fieldName}[]`
         );
-        if (!field) return console.warn(`No field found for ${fieldName}`);
+        if (!allFieldMatches.length === 0)
+            return console.warn(`No field found for ${fieldName}`);
+        const field = allFieldMatches[0];
         // Get parent container
-        const container = field.closest(SELECTOR.FIELD_CONTAINER);
-        if (!container)
-            return console.warn(`No container found for ${fieldName}`);
+        const container = getContainer(field);
         // Get the component name from its classname
         const componentName = container.classList && container.classList[0];
         // Build the error template
@@ -120,38 +131,30 @@ window.renderErrors = (errors, form) => {
                 ${errorList.join('<br/>')}
             </div>
         `;
-        // Query an element within the container
-        const containerQuerySelector = selector => {
-            const el = container.querySelector(selector);
-            if (!el) return console.warn(`No el found for ${selector}`);
-            return el;
-        };
-        // Treat errors in fieldsets a little differently
-        const isFieldset = componentName === 'f-fieldset';
-        const anchorPoint = containerQuerySelector(
-            isFieldset ? '[data-field-legend]' : '[data-field-inner]'
+        // Get the anchorpoint by returning the first item found
+        const anchorPoint = container.querySelector(
+            '[data-field-inner], [data-field-legend]'
         );
+        if (!anchorPoint) return console.warn(`No anchorpoint found`);
         // Add the error template after the anchor point
         anchorPoint.insertAdjacentHTML('afterend', errorTemplate);
         // Add error class to container so it receives styles
         container.classList.add('has-error');
         // Add a listener on blur to run a callback
-        blurListener(field, true, clearFieldError);
+        Array.from(allFieldMatches).map(item => {
+            addBlurListener(item, clearFieldError);
+        });
         // Scroll the first field into view
         if (index === 0) field.scrollIntoView();
     });
 };
 
-const blurListener = (target, addListener = true, cb) => {
-    if (addListener) {
-        target.addEventListener('blur', event => {
-            cb(event.target);
-        });
-    } else {
-        target.removeEventListener('blur', event => {
-            cb(event.target);
-        });
-    }
+const addBlurListener = (target, cb) => {
+    if (!target) return;
+    // Remove any existing listeners
+    target.removeEventListener('blur', ({ target }) => cb(target));
+    // Add the listener
+    target.addEventListener('blur', ({ target }) => cb(target));
 };
 
 const addSubmitListeners = form => {
@@ -164,14 +167,18 @@ const addSubmitListeners = form => {
 };
 
 // Run clearFieldError when an errored field is blurred
-const addFieldBlurListeners = form => {
+// Only works for non-AJAX forms
+const addFieldErrorBlurListeners = form => {
     const errors = form.querySelectorAll('.has-error');
     if (!errors) return;
     Array.from(errors).forEach(error => {
-        const field = error.querySelector(SELECTOR.FIELD);
-        if (!field)
-            return console.warn(`Formalism: Field not found within component`);
-        blurListener(field, true, clearFieldError);
+        const allFieldMatches = error.querySelectorAll(SELECTOR.FIELD);
+        if (!allFieldMatches.length === 0)
+            return console.warn(`No field found for ${fieldName}`);
+        // Add a listener on blur to run a callback
+        Array.from(allFieldMatches).map(item => {
+            addBlurListener(item, clearFieldError);
+        });
     });
 };
 
@@ -180,7 +187,7 @@ const addListeners = () => {
     if (!forms) return;
     Array.from(forms).forEach(form => {
         addSubmitListeners(form);
-        addFieldBlurListeners(form);
+        addFieldErrorBlurListeners(form);
     });
 };
 
