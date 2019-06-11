@@ -28,12 +28,10 @@
 
 {% set self = craft.formalism.deepMerge(defaults, params) %}
 {% set bc = self.baseClass %}
-{% set hasPlaceholder = self.options.0.value|default is empty %}
 {% set hasError = self.error or self.hasError %}
 {% set errorClass = hasError ? 'has-error' : '' %}
-{% set filledClass = self.value or (hasPlaceholder and not self.value) ? 'is-filled' : '' %}
+{% set filledClass = 'is-filled' %}
 {% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, self.isOptional ? self.indicator.optional|default('optional') : null, bc) %}
-
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
     'data-container': '',
@@ -61,10 +59,6 @@
 <div {{ attributesContainer }}>
     <label {{ attributesInner }}>
         <select {{ attributesField }}>
-            {% if not hasPlaceholder and not self.value %}
-                {# The empty placeholder technique #}
-                <option value="" selected disabled hidden></option>
-            {% endif %}
             {% for option in self.options %}
                 <option value="{{ option.value }}"{{ option.value == self.value ? ' selected' }}>{{ option.label|raw }}</option>
             {% endfor %}
