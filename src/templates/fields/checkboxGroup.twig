@@ -41,7 +41,7 @@
     'data-container': '',
 })) %}
 
-{% if self.minColumnWidth %}{% spaceless %}
+{% if self.minColumnWidth and self.oneLine %}{% spaceless %}
     {% set vendorColumnText %} style="min-width:{{ self.minColumnWidth }};"{% endset %}
 {% endspaceless %}{% endif %}
 
