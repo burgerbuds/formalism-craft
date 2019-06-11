@@ -107,7 +107,6 @@ const getContainer = field => {
 
 // Add the error messages to each field
 window.renderErrors = (errors, form) => {
-    console.log(errors);
     // Reset the form errors
     removeExistingErrors(form);
     changeSubmitState(form, false);
