@@ -1,4 +1,5 @@
 {# Freeform custom form template #}
+{# Copy to your templates directory and adapt to your requirements #}
 
 {{ craft.formalism.freeformJs }}
 
@@ -86,6 +87,8 @@
         "enctype": "multipart/form-data",
     },
 }) }}
+
+{% set minColumnWidth = '200px' %}
 
 <div class="form__inner" data-form-inner>
 
@@ -190,7 +193,7 @@
                                     properties,
                                     {
                                         oneLine: field.oneLine,
-                                        minColumnWidth: '200px',
+                                        minColumnWidth: minColumnWidth,
                                     }
                                 ) }}
 
@@ -199,7 +202,7 @@
                                     properties,
                                     {
                                         oneLine: field.oneLine,
-                                        minColumnWidth: '200px',
+                                        minColumnWidth: minColumnWidth,
                                     }
                                 ) }}
 
@@ -221,7 +224,7 @@
                                         {
                                             oneLine: field.oneLine,
                                             options: dynamicOptions,
-                                            minColumnWidth: '200px',
+                                            minColumnWidth: minColumnWidth,
                                         }
                                     ) }}
 
@@ -231,7 +234,7 @@
                                         {
                                             oneLine: field.oneLine,
                                             options: dynamicOptions,
-                                            minColumnWidth: '200px',
+                                            minColumnWidth: minColumnWidth,
                                         }
                                     ) }}
 
@@ -240,6 +243,7 @@
                                         properties,
                                         {
                                             options: dynamicOptions,
+                                            type: 'dynamic_recipients'
                                         }
                                     ) }}
 
