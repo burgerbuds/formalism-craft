@@ -34,7 +34,7 @@
 {% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, self.isOptional ? self.indicator.optional|default('optional') : null, bc) %}
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
-    'data-container': '',
+    'data-field-container': '',
 })) %}
 
 {% set attributesInner = macros.attributes(craft.formalism.deepMerge(self.attributesInner, {

@@ -27,7 +27,7 @@ Once you've got Formalism setup, you can create a basic input component in Twig 
 This markup will be generated:
 
 ```html
-<div class="f-input f-input--outlined" data-container>
+<div class="f-input f-input--outlined" data-field-container>
     <label class="f-input__inner" for="input150">
       <input class="f-input__field" type="text" id="input150" name="fullName" value="" required="required" data-field>
       <span class="f-input__label">

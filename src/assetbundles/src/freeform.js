@@ -33,7 +33,7 @@ const removeNode = (parentNode, selector) => {
 const SELECTOR = {
     FORM_INNER: '[data-form-inner]',
     ERROR_NOTE: '[data-form-error-note]',
-    FIELD_CONTAINER: '[data-container]',
+    FIELD_CONTAINER: '[data-field-container]',
     FIELD_ERROR: '[data-field-error]',
     FIELD: '[data-field]',
 };
@@ -96,7 +96,7 @@ const getContainer = field => {
     // Get parent container
     let container = field.closest(SELECTOR.FIELD_CONTAINER);
     // Check if container is part of a fieldset
-    const isFieldset = container.hasAttribute('data-container-fieldgroup');
+    const isFieldset = container.hasAttribute('data-field-fieldgroup');
     // Select the parent fieldset if field
     if (isFieldset) {
         container = container.parentNode.closest(SELECTOR.FIELD_CONTAINER);
