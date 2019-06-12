@@ -1,6 +1,6 @@
 {
     "name": "formalism-craft",
-    "version": "0.0.6",
+    "version": "1.0.0",
     "description": "Modern forms, your way. Modular. Lightweight. Responsive. Stuff that matters.",
     "main": "main.js",
     "scripts": {
