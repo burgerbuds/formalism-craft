@@ -2,7 +2,7 @@
     "name": "simple/formalism-craft",
     "description": "Twig components for the Formalism field style framework",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "keywords": [
         "craft",
         "cms",
