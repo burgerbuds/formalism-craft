@@ -115,7 +115,7 @@ window.renderErrors = (errors, form) => {
         // Add the errors to each error field
         const errorList = errors[fieldName];
         const allFieldMatches = form.querySelectorAll(
-            `[name="${fieldName}"], [name="${fieldName}[]`
+            `[name="${fieldName}"], [name="${fieldName}[]"]`
         );
         if (!allFieldMatches.length === 0)
             return console.warn(`No field found for ${fieldName}`);
