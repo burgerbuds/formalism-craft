@@ -154,16 +154,21 @@
 
                             {% case "select" %}
                                 {% set hasPleaseChooseOption = properties.options.0.value|default is same as('') %}
-                                {% set pleaseChooseOption = hasPleaseChooseOption ? {} : {
-                                    options: [
-                                        {
+
+                                {% if hasPleaseChooseOption %}
+                                    {{ craft.formalism.select(properties) }}
+
+                                {% else %}
+                                    {% set newOptions = {
+                                        options: [{
                                             label: 'Please choose&hellip;',
                                             value: '',
-                                            isChecked: false,
-                                        }
-                                    ]
-                                } %}
-                                {{ craft.formalism.select(properties, pleaseChooseOption) }}
+                                        }]|merge(properties.options)
+                                    } %}
+
+                                    {{ craft.formalism.select(properties, newOptions) }}
+
+                                {% endif %}
 
                             {% case "file" %}
                                 {{ craft.formalism.file(properties, {
