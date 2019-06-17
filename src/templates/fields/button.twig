@@ -5,7 +5,6 @@
     label: 'Label',
     theme: 'solid',
     type: 'button',
-    classes: [],
     isDisabled: false,
     attributesContainer: {},
     attributesInner: {},
@@ -19,7 +18,7 @@
 {% set bc = self.baseClass %}
 
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
-    class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' ')]|join(' ')|trim,
+    class: [[bc, [bc, self.theme]|join('--') ]|join(' ')]|join(' ')|trim,
     'data-field-container': '',
 })) %}
 

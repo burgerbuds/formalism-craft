@@ -7,7 +7,6 @@
     name: '',
     value: '',
     instructions: '',
-    classes: [],
     size: [5, 40],
     id: 'textarea' ~ random(5000),
     error: '',
@@ -34,7 +33,7 @@
 {% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, self.isOptional ? self.indicator.optional|default('optional') : null, bc) %}
 
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
-    class: [[bc, [bc,self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
+    class: [[bc, [bc,self.theme]|join('--') ]|join(' '), errorClass, filledClass]|join(' ')|trim,
     'data-field-container': '',
 })) %}
 

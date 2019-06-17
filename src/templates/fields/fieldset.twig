@@ -7,7 +7,6 @@
     label: 'Label',
     name: '',
     theme: 'outlined',
-    classes: [],
     id: 'fieldset' ~ random(5000),
     error: '',
     instructions: '',
@@ -33,7 +32,6 @@
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [
         [bc, [bc,self.theme]|join('--') ]|join(' '),
-        self.classes|join(' '),
         errorClass
     ]|join(' ')|trim,
     'data-field-container': '',

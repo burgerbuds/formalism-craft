@@ -6,7 +6,6 @@
     name: '',
     theme: 'outlined',
     value: '',
-    classes: [],
     id: 'checkbox' ~ random(5000),
     error: '',
     hasError: false,
@@ -34,7 +33,7 @@
 {% set labelChildren = self.isRequired ? '&nbsp;'|raw ~ indicator : '' %}
 
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
-    class: [[bc, [bc, self.theme]|join('--') ]|join(' '), self.classes|join(' '), errorClass, filledClass]|join(' ')|trim,
+    class: [[bc, [bc, self.theme]|join('--') ]|join(' '), errorClass, filledClass]|join(' ')|trim,
     'data-field-container' : '',
     (self.isFieldGroup ? 'data-field-fieldgroup' : ''): ''
 })) %}

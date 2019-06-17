@@ -7,7 +7,6 @@
     options: [],
     theme: 'outlined',
     themeOptions: 'outlined',
-    classes: [],
     id: 'radio-group' ~ random(5000),
     error: '',
     instructions: '',
@@ -35,7 +34,6 @@
 {% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
     class: [
         [bc, [bc,self.theme]|join('--') ]|join(' '),
-        self.classes|join(' '),
         errorClass
     ]|join(' ')|trim,
     'data-field-container': '',
