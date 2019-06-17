@@ -1,0 +1,62 @@
+{% import 'formalism/macros' as macros %}
+{% spaceless %}
+
+{% set defaults = {
+    content: '',
+    oneLine: false,
+    label: 'Label',
+    name: '',
+    theme: 'outlined',
+    classes: [],
+    id: 'fieldset' ~ random(5000),
+    error: '',
+    instructions: '',
+    hasError: false,
+    isRequired: false,
+    indicator: {
+        isHidden: false,
+        required: '*',
+        optional: 'optional',
+    },
+    attributesContainer: {},
+    attributesInner: {},
+    baseClass: 'f-fieldset'
+} %}
+
+{% set self = craft.formalism.deepMerge(defaults, params) %}
+{% set bc = self.baseClass %}
+{% set hasError = self.error or self.hasError %}
+{% set errorClass = hasError ? 'has-error' : '' %}
+{% set indicator = not self.indicator.isHidden|default(false) ? macros.indicator(self.isRequired ? self.indicator.required|default('*') : null, null, bc) %}
+{% set legendChildren = self.isRequired ? '&nbsp;'|raw ~ indicator : '' %}
+
+{% set attributesContainer = macros.attributes(craft.formalism.deepMerge(self.attributesContainer, {
+    class: [
+        [bc, [bc,self.theme]|join('--') ]|join(' '),
+        self.classes|join(' '),
+        errorClass
+    ]|join(' ')|trim,
+    'data-field-container': '',
+})) %}
+
+{% set attributesInner = macros.attributes(craft.formalism.deepMerge(self.attributesInner, {
+    class: [
+        bc ~ '__inner',
+        bc ~ '__inner--' ~ (self.oneLine ? 'one-line' : 'stacked')
+    ]|join(' '),
+    for: self.id,
+})) %}
+
+<fieldset {{ attributesContainer }}>
+    {% if self.label %}
+        <legend class="{{ bc }}__legend" data-field-legend>
+            {{ macros.label(self.label, bc, legendChildren) }}
+        </legend>
+    {% endif %}
+    {{ macros.messages(self.error, self.instructions, bc) }}
+    <div {{ attributesInner }}>
+        {{ self.content }}
+    </div>
+</fieldset>
+
+{% endspaceless %}
