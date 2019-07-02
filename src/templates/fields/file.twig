@@ -14,6 +14,7 @@
     isRequired: false,
     isOptional: false,
     isDisabled: false,
+    isMultiple: false,
     indicator: {
         isHidden: false,
         required: '*',
@@ -54,6 +55,7 @@
     accept: self.accept,
     required: self.isRequired ? 'required' : null,
     disabled: self.isDisabled ? 'true' : null,
+    multiple: self.isMultiple ? 'true' : null,
     'aria-invalid': hasError ? 'true' : null,
     'aria-describedby': instructionId,
     'data-field': '',
