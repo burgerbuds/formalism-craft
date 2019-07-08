@@ -39,7 +39,7 @@ const SELECTOR = {
 };
 
 // Add the success message to the top of the form
-window.renderFormSuccess = form => {
+const callbackRenderSuccess = form => {
     const successTemplate =
         window[form.id.replace('-', '')].successTemplate ||
         'Your form was submitted';
@@ -51,7 +51,7 @@ window.renderFormSuccess = form => {
 };
 
 // Add the error message to the top of the form
-window.renderFormErrors = (errors, form) => {
+const callbackRenderFormErrors = (errors, form) => {
     removeNode(form, SELECTOR.ERROR_NOTE);
     const errorTemplate = window[form.id.replace('-', '')].errorTemplate || '';
     form.querySelector(SELECTOR.FORM_INNER).insertAdjacentHTML(
@@ -60,7 +60,7 @@ window.renderFormErrors = (errors, form) => {
     );
 };
 
-const removeExistingErrors = form => {
+const callbackRemoveMessages = form => {
     removeNode(form, SELECTOR.ERROR_NOTE);
     const fieldErrors = form.querySelectorAll(SELECTOR.FIELD_ERROR);
     Array.from(fieldErrors).forEach(fieldError => {
@@ -72,7 +72,10 @@ const changeSubmitState = (form, addState = true) => {
     addState && form.classList.add('is-submitting');
     !addState && form.classList.remove('is-submitting');
     const submitButton = form.querySelector('button[type=submit]');
-    submitButton && submitButton.setAttribute('disabled', addState);
+    if (submitButton) {
+        addState && submitButton.setAttribute('disabled', addState);
+        !addState && submitButton.removeAttribute('disabled');
+    }
     // Submitting notice (optional)
     const submittingNote = document.querySelector(`#submitting-${form.id}`);
     if (submittingNote) {
@@ -106,10 +109,7 @@ const getContainer = field => {
 };
 
 // Add the error messages to each field
-window.renderErrors = (errors, form) => {
-    // Reset the form errors
-    removeExistingErrors(form);
-    changeSubmitState(form, false);
+const callbackRenderFieldErrors = (errors, form) => {
     if (errors.length === 0) return;
     Object.keys(errors).forEach((fieldName, index) => {
         // Add the errors to each error field
@@ -156,15 +156,6 @@ const addBlurListener = (target, cb) => {
     target.addEventListener('blur', ({ target }) => cb(target));
 };
 
-const addSubmitListeners = form => {
-    if (!form) return;
-    form.addEventListener('submit', () => {
-        removeExistingErrors(form);
-        changeSubmitState(form, true);
-        return;
-    });
-};
-
 // Run clearFieldError when an errored field is blurred
 // Only works for non-AJAX forms
 const addFieldErrorBlurListeners = form => {
@@ -181,19 +172,39 @@ const addFieldErrorBlurListeners = form => {
     });
 };
 
-const addListeners = () => {
-    const forms = document.querySelectorAll('form');
+// Freeform callbacks
+// https://docs.solspace.com/craft/freeform/v3/developer/js-plugin.html
+const init = () => {
+    const forms = document.querySelectorAll('form[data-freeform]');
     if (!forms) return;
+
     Array.from(forms).forEach(form => {
-        addSubmitListeners(form);
-        addFieldErrorBlurListeners(form);
+        form.addEventListener('freeform-ready', event => {
+            const freeform = event.target.freeform;
+
+            freeform.addOnSubmitCallback(formElement => {
+                changeSubmitState(formElement, true);
+                return true;
+            });
+
+            freeform.setOption('renderSuccess', () => {
+                callbackRenderSuccess(form);
+            });
+
+            freeform.setOption('removeMessages', () => {
+                callbackRemoveMessages(form);
+            });
+
+            freeform.setOption('renderFormErrors', errors => {
+                callbackRenderFormErrors(errors, form);
+                setTimeout(changeSubmitState(form, false), 2000);
+            });
+
+            freeform.setOption('renderFieldErrors', errors => {
+                callbackRenderFieldErrors(errors, form);
+            });
+        });
     });
 };
 
-window.addEventListener(
-    'DOMContentLoaded',
-    () => {
-        addListeners();
-    },
-    false
-);
+init();
