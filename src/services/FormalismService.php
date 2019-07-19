@@ -119,9 +119,10 @@ class FormalismService extends Component
         ];
 
         if (method_exists($field, 'getInputAttributes')) {
+            $fieldAttributes = array_filter($field->getInputAttributes());
             $inputAttributes = array_map(function($attribute) {
-                return [$attribute['attribute'] => $attribute['value']];
-            }, $field->getInputAttributes());
+                return [$attribute['attribute'] => $attribute['value'] ?? ''];
+            }, $fieldAttributes);
             if ($inputAttributes) {
                 $attributesField = array_replace_recursive($attributesField, call_user_func_array('array_merge', $inputAttributes));
             }
