@@ -6,7 +6,7 @@ Formalism is a set of form components that deliver an amazing user experience wi
 
 This plugin provides a range of functions to help create the HTML markup required for Formalism. 
 
-You'll also need to install the npm module containing the field styles. 
+Formalism Craft creates the HTML and the styles are added from our separate npm package.
 
 ### Freeform integration
 
@@ -45,10 +45,6 @@ After importing the input base and theme file:
 @import 'formalism/input/outlined';
 ```
 
-Your input will look like this:
-
-[SCREENCAP TO GO HERE]
-
 There's plenty more field components like button, checkbox, checkboxGroup, date, file, input, radio, radioGroup, search, submit, switcher and textarea.
 
 <!-- Take a look at the documentation for usage information. -->
@@ -84,7 +80,7 @@ This plugin requires Craft CMS 3.0.0-beta.23 or later.
 
 ### Styles installation
 
-1. To style the field components, you'll need to install the npm package:
+1. To style the field components, install the npm package:
 
 ```shell
 npm install formalism
@@ -122,6 +118,5 @@ Together these styles are only 5.66 kB (gzipped).
 
 ### Links and plugs
 
-- Formalism documentation (coming soon)
 - [Swiff](https://github.com/simple-integrated-marketing/swiff) - A CLI app that makes working with a staging server easy-as-pie
-- [Simple](https://simple.com.au/) - An agency operating in Adelaide, Australia creating Craft websites
+- [Simple](https://simple.com.au/) - An Australian agency creating Craft websites
