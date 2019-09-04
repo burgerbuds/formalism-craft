@@ -12,16 +12,14 @@
         "form styles"
     ],
     "support": {
-        "docs": "https://github.com/simple-integrated-marketing/formalism/blob/master/README.md",
-        "issues": "https://github.com/simple-integrated-marketing/formalism/issues"
+        "docs": "https://github.com/burgerbuds/formalism/blob/master/README.md",
+        "issues": "https://github.com/burgerbuds/formalism/issues"
     },
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Simple-Integrated-Marketing",
-            "homepage": "https://simple.com.au"
-        }
-    ],
+    "authors": [{
+        "name": "Simple-Integrated-Marketing",
+        "homepage": "https://simple.com.au"
+    }],
     "require": {
         "craftcms/cms": "^3.0.0-RC1",
         "solspace/craft-freeform": "^3.1.0"
@@ -36,7 +34,7 @@
         "handle": "formalism",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/simple-integrated-marketing/formalism/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/burgerbuds/formalism-craft/master/CHANGELOG.md",
         "components": {
             "formalismService": "simple\\formalism\\services\\FormalismService"
         },
