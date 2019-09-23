@@ -43,6 +43,7 @@
         bc ~ '__inner--' ~ (self.oneLine ? 'one-line' : 'stacked')
     ]|join(' '),
     for: self.id,
+    'data-field-inner': true,
 })) %}
 
 <fieldset {{ attributesContainer }}>
