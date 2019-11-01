@@ -135,10 +135,12 @@
                                         attributesField: {
                                             autocomplete: 'off',
                                             'data-datepicker-enabled': true,
-                                            'data-datepicker-format': getAttr['data-datepicker-format']|default,
-                                            'data-datepicker-enabledate': getAttr['data-datepicker-enabledate']|default,
-                                            'data-datepicker-min-date': getAttr['data-datepicker-min-date']|default,
-                                            'data-datepicker-max-date': getAttr['data-datepicker-max-date']|default,
+                                            'data-datepicker-enabled': getAttr['data-datepicker-enabled']|default(null),
+                                            'data-datepicker-format': getAttr['data-datepicker-format']|default(null),
+                                            'data-datepicker-enabledate': getAttr['data-datepicker-enabledate']|default(null),
+                                            'data-datepicker-enabletime': getAttr['data-datepicker-enabletime']|default(null),
+                                            'data-datepicker-min-date': getAttr['data-datepicker-min-date']|default(null),
+                                            'data-datepicker-max-date': getAttr['data-datepicker-max-date']|default(null),
                                         }
                                     }
                                 ) }}
