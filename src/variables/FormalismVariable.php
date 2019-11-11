@@ -53,7 +53,9 @@ class FormalismVariable
     {
         $x = new SimpleXMLElement($html);
         $attributes = iterator_to_array($x->attributes());
-        return $attributes;
+        return array_map(function($e) {
+            return (string) $e;
+        }, $attributes);
     }
 
     public function deepMerge(array $array1, array $array2)
