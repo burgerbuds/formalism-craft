@@ -73,6 +73,7 @@ class FormalismService extends Component
             "select",
             "switcher",
             "textarea",
+            "signature",
         ];
 
         $filePath = "formalism/fields/{$componentName}.twig";

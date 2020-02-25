@@ -54,7 +54,7 @@
     {% endif %}
     {{ macros.messages(self.error, self.instructions, bc) }}
     <div {{ attributesInner }}>
-        {{ self.content }}
+        {{ self.content | raw }}
     </div>
 </fieldset>
 
