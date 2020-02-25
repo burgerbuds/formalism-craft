@@ -2,7 +2,7 @@
 	"name": "burgerbuds/formalism-craft",
 	"description": "Twig components for the Formalism field style framework",
 	"type": "craft-plugin",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"keywords": [
 		"craft",
 		"cms",

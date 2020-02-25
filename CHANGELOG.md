@@ -1,5 +1,9 @@
 # Release Notes for Formalism
 
+## 1.0.9 - 2020.02.25
+
+-   Added support for `signature` field
+
 ## 1.0.8 - 2019.11.11
 
 ### Changed
