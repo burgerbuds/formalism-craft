@@ -128,6 +128,8 @@ class FormalismService extends Component
                 $attributesField = array_replace_recursive($attributesField, call_user_func_array('array_merge', $inputAttributes));
             }
         }
+        
+        $placeholder = method_exists($field, 'getPlaceholder') ? $field->getPlaceholder() : null;
 
         $fieldId = ($field->getId() !== 0) ? $field->getId() : mt_rand(0, 5000);
 
@@ -136,6 +138,7 @@ class FormalismService extends Component
             'name' => $field->getHandle(),
             'id' => "form{$form->getId()}field{$fieldId}",
             'instructions' => $field->getInstructions(),
+            'placeholder' => $placeholder,
             'error' => join('. ', $field->getErrors()),
             'isRequired' => $field->isRequired(),
             'isDisabled' => false,
