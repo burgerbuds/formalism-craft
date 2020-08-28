@@ -91,6 +91,16 @@
 
 {% set minColumnWidth = '200px' %}
 
+{% if form.pages|length > 1 %}
+    <ul class="nav nav-tabs">
+        {% for page in form.pages %}
+            <li class="nav-item">
+                <span class="nav-link{{ form.currentPage.index == page.index ? ' font-weight-bold active' : ' disabled' }}">{{ page.label }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 <div class="form__inner" data-form-inner>
 
     {% if form.hasErrors %}
