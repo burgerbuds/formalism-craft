@@ -97,9 +97,7 @@
         {{ formErrorHtml }}
     {% endif %}
 
-    {% for page in form.pages %}
-
-        {% for row in page %}
+        {% for row in form %}
             <div class="form__group form__group--{{ row|length }}-col{{ form.customAttributes.rowClass ? " #{ form.customAttributes.rowClass }" }}">
 
                 {% for field in row %}
@@ -309,8 +307,6 @@
             </div>
 
         {% endfor %}
-
-    {% endfor %}
 
 </div>
 
