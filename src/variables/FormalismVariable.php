@@ -51,11 +51,14 @@ class FormalismVariable
 
     public function getObjectFromHtml(string $html)
     {
-        $x = new SimpleXMLElement($html);
-        $attributes = iterator_to_array($x->attributes());
-        return array_map(function($e) {
-            return (string) $e;
-        }, $attributes);
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+        $body = $dom->getElementsByTagName("body");
+        $result = [];
+        foreach ($body->item(0)->firstChild->attributes as $attr) {
+            $result[$attr->nodeName] = $attr->nodeValue;
+        }
+        return $result;
     }
 
     public function deepMerge(array $array1, array $array2)

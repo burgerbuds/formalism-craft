@@ -1,5 +1,9 @@
 # Release Notes for Formalism
 
+## 1.0.10 - 2020.11.11
+
+- Fix an issue where `SimpleXMLElement` will break if the input html does not comply XML rules (eg. it requires data-required attribute to have a value)
+
 ## 1.0.9 - 2020.02.25
 
 -   Added support for `signature` field
