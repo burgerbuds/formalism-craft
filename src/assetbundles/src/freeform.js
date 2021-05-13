@@ -182,27 +182,33 @@ const init = () => {
         form.addEventListener('freeform-ready', event => {
             const freeform = event.target.freeform;
 
-            freeform.addOnSubmitCallback(formElement => {
-                changeSubmitState(formElement, true);
+            form.addEventListener("freeform-on-submit", function(event) {
+                changeSubmitState(form, true);
+                return true;
+            });
+            form.addEventListener("freeform-ajax-before-submit", function(event) {
+                changeSubmitState(form, true);
                 return true;
             });
 
-            freeform.setOption('renderSuccess', () => {
+            document.addEventListener("freeform-render-success", function (event) {
                 callbackRenderSuccess(form);
             });
 
-            freeform.setOption('removeMessages', () => {
+            document.addEventListener("freeform-remove-messages", function (event) {
                 callbackRemoveMessages(form);
             });
 
-            freeform.setOption('renderFormErrors', errors => {
+            document.addEventListener("freeform-render-form-errors", function (event) {
+                const errors = event.errors;
                 callbackRenderFormErrors(errors, form);
                 setTimeout(changeSubmitState(form, false), 2000);
             });
 
-            freeform.setOption('renderFieldErrors', errors => {
+            document.addEventListener("freeform-render-field-errors", function (event) {
                 callbackRenderFieldErrors(errors, form);
             });
+
         });
     });
 };
