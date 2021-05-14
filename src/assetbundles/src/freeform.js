@@ -210,6 +210,7 @@ const init = () => {
 
             document.addEventListener("freeform-render-field-errors", function (event) {
                 event.preventDefault();
+                const errors = event.errors;
                 callbackRenderFieldErrors(errors, form);
             });
 
