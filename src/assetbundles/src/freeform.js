@@ -173,7 +173,12 @@ const addFieldErrorBlurListeners = form => {
 };
 
 // In case Blitz is used, update the CSRF token in the form
+// *** The form needs to have [data-blitz] on the <form> tag ***
 const tryUpdateCSRFInCaseBlitzIsUsed = (form) => {
+    if (!form.hasAttribute("data-blitz") || !form.getAttribute("data-blitz")) {
+        return;
+    }
+
     // Gets the CSRF param
     Promise.all([
         fetch('/actions/blitz/csrf/param').then(result => { return result.text(); }),
