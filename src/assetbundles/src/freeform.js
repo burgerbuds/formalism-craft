@@ -172,6 +172,19 @@ const addFieldErrorBlurListeners = form => {
     });
 };
 
+// In case Blitz is used, update the CSRF token in the form
+const tryUpdateCSRFInCaseBlitzIsUsed = (form) => {
+    // Gets the CSRF param
+    Promise.all([
+        fetch('/actions/blitz/csrf/param').then(result => { return result.text(); }),
+        fetch('/actions/blitz/csrf/token').then(result => { return result.text(); })
+    ]).then(([csrfName, csrfValue]) => {
+        form.querySelector('input[name=' + csrfName + ']').value = csrfValue;
+    }).catch(e => {
+        console.info("Blitz is not in use");
+    })
+}
+
 // Freeform callbacks
 // https://docs.solspace.com/craft/freeform/v3/developer/js-plugin.html
 const init = () => {
@@ -214,6 +227,7 @@ const init = () => {
                 callbackRenderFieldErrors(errors, form);
             });
 
+            tryUpdateCSRFInCaseBlitzIsUsed(form);
         });
     });
 };
