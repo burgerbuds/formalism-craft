@@ -209,24 +209,24 @@ const init = () => {
                 return true;
             });
 
-            document.addEventListener("freeform-render-success", function (event) {
+            form.addEventListener("freeform-render-success", function (event) {
                 event.preventDefault();
                 callbackRenderSuccess(form);
             });
 
-            document.addEventListener("freeform-remove-messages", function (event) {
+            form.addEventListener("freeform-remove-messages", function (event) {
                 event.preventDefault();
                 callbackRemoveMessages(form);
             });
 
-            document.addEventListener("freeform-render-form-errors", function (event) {
+            form.addEventListener("freeform-render-form-errors", function (event) {
                 event.preventDefault();
                 const errors = event.errors;
                 callbackRenderFormErrors(errors, form);
                 setTimeout(changeSubmitState(form, false), 2000);
             });
 
-            document.addEventListener("freeform-render-field-errors", function (event) {
+            form.addEventListener("freeform-render-field-errors", function (event) {
                 event.preventDefault();
                 const errors = event.errors;
                 callbackRenderFieldErrors(errors, form);
