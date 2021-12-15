@@ -5,6 +5,7 @@
     This takes over AJAX functions to add markup that works with Formalism.
     It also adds a "submitting" state to give better feedback to the user.
 */
+window.formalismCraft = {};
 
 if (!Element.prototype.matches) {
     Element.prototype.matches =
@@ -67,6 +68,8 @@ const callbackRemoveMessages = form => {
         clearFieldError(fieldError);
     });
 };
+
+window.formalismCraft.callbackRemoveMessages = callbackRemoveMessages;
 
 const changeSubmitState = (form, addState = true) => {
     addState && form.classList.add('is-submitting');
@@ -147,6 +150,8 @@ const callbackRenderFieldErrors = (errors, form) => {
         if (index === 0) field.scrollIntoView();
     });
 };
+
+window.formalismCraft.callbackRenderFieldErrors = callbackRenderFieldErrors;
 
 const addBlurListener = (target, cb) => {
     if (!target) return;
